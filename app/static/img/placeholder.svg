@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">
+  <rect width="300" height="450" fill="#1f2430"/>
+  <rect x="1" y="1" width="298" height="448" fill="none" stroke="#2a3140" stroke-width="2"/>
+  <text x="150" y="220" font-size="64" text-anchor="middle">🎬</text>
+  <text x="150" y="275" font-size="16" fill="#9aa3b5" text-anchor="middle" font-family="sans-serif">Sin carátula</text>
+</svg>

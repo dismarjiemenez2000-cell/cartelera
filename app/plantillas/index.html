@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<section class="encabezado">
+  <h1>Cartelera</h1>
+  <p>Califica con estrellas las películas que ya viste.</p>
+</section>
+
+<div class="grilla">
+  {% for p in peliculas %}
+    <a class="tarjeta" href="/pelicula/{{ p.id }}">
+      <img src="{{ p.imagen }}" alt="Carátula de {{ p.titulo }}" loading="lazy">
+      <div class="cuerpo">
+        <h3>{{ p.titulo }} <span class="anio">({{ p.anio }})</span></h3>
+        <div class="estrellas" aria-label="{{ p.texto }}">
+          {%- for i in range(1, 6) -%}
+          <span class="{{ 'llena' if i <= p.llenas else 'vacia' }}">★</span>
+          {%- endfor -%}
+        </div>
+        <small>{{ p.texto }}</small>
+      </div>
+    </a>
+  {% else %}
+    <p class="vacio">Aún no hay películas. La coordinadora publicará la primera desde su panel.</p>
+  {% endfor %}
+</div>
+{% endblock %}
+#es nuestro catalogo de peliculas, donde se muestran todas las peliculas que tenemos en la base de datos, y se puede calificar cada una de ellas.

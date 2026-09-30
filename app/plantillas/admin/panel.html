@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block titulo %}Panel admin — Cartelera{% endblock %}
+
+{% block contenido %}
+<h1>Panel de administración</h1>
+<p class="sub">Publica nuevas películas y retira las que ya no correspondan (RN-04: solo la coordinadora puede).</p>
+
+<section class="seccion">
+  <h2>Nueva película</h2>
+  <form class="tarjeta-form" method="post" action="/admin/peliculas" enctype="multipart/form-data">
+    <label>Título *
+      <input type="text" name="titulo" required maxlength="120">
+    </label>
+    <div class="fila">
+      <label>Año *
+        <input type="number" name="anio" min="1900" max="2100" required>
+      </label>
+      <label>Link del tráiler (YouTube) *
+        <input type="url" name="url_trailer" required placeholder="https://www.youtube.com/watch?v=…">
+      </label>
+    </div>
+    <label>Sinopsis
+      <textarea name="sinopsis" rows="4" maxlength="1000" placeholder="De qué se trata…"></textarea>
+    </label>
+    <label>Carátula (JPG, PNG o WebP — máximo 5 MB)
+      <input type="file" name="caratula" accept=".jpg,.jpeg,.png,.webp">
+    </label>
+    <button type="submit">Publicar película</button>
+  </form>
+</section>
+
+<section class="seccion">
+  <h2>Películas publicadas ({{ peliculas|length }})</h2>
+  <table class="tabla">
+    <thead>
+      <tr><th></th><th>Título</th><th>Año</th><th>Calificación</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for p in peliculas %}
+      <tr>
+        <td><img class="mini" src="{{ p.imagen }}" alt=""></td>
+        <td><a href="/pelicula/{{ p.id }}">{{ p.titulo }}</a></td>
+        <td>{{ p.anio }}</td>
+        <td>{{ p.texto }}</td>
+        <td>
+          <form method="post" action="/admin/peliculas/{{ p.id }}/eliminar"
+                onsubmit="return confirm('¿Eliminar esta película y todas sus calificaciones?')">
+            <button class="peligro" type="submit">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">Aún no hay películas publicadas.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ pelicula.titulo }} — Cartelera{% endblock %}
+
+{% block contenido %}
+<section class="ficha">
+  <img class="caratula" src="{{ pelicula.imagen }}" alt="Carátula de {{ pelicula.titulo }}">
+
+  <div class="datos">
+    <h1>{{ pelicula.titulo }} <span class="anio">({{ pelicula.anio }})</span></h1>
+
+    <div class="estrellas grandes" aria-label="{{ pelicula.texto }}">
+      {%- for i in range(1, 6) -%}
+      <span class="{{ 'llena' if i <= pelicula.llenas else 'vacia' }}">★</span>
+      {%- endfor -%}
+      <span class="detalle-promedio">{{ pelicula.texto }}</span>
+    </div>
+
+    <p class="sinopsis">{{ pelicula.sinopsis }}</p>
+
+    {% if usuario %}
+      <div class="calificar" data-pelicula="{{ pelicula.id }}">
+        <span class="etiqueta">Tu calificación:</span>
+        <span class="selector">
+          {%- for i in range(1, 6) -%}
+          <button type="button" class="estrella {{ 'activa' if i <= mi_calificacion }}"
+                  data-valor="{{ i }}" title="{{ i }} de 5">★</button>
+          {%- endfor -%}
+        </span>
+        <small>Haz clic en una estrella para calificar o cambiar tu voto.</small>
+      </div>
+    {% else %}
+      <p class="aviso"><a href="/login">Inicia sesión</a> o
+        <a href="/registro">crea una cuenta</a> para calificar esta película.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="trailer">
+  <h2>Tráiler</h2>
+  <div class="marco">
+    <iframe src="{{ pelicula.url_trailer }}" title="Tráiler de {{ pelicula.titulo }}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+  </div>
+</section>
+
+<script src="/static/estrellas.js"></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Cartelera{% endblock %}</title>
+  <link rel="stylesheet" href="/static/estilos.css">
+</head>
+<body>
+<header class="barra">
+  <a class="logo" href="/">🎬 Cartelera</a>
+  <nav>
+    {% if usuario %}
+      {% if usuario.rol == 'admin' %}<a href="/admin">Panel admin</a>{% endif %}
+      <span class="usuario">Hola, {{ usuario.nombre }}</span>
+      <a href="/salir">Salir</a>
+    {% else %}
+      <a href="/login">Iniciar sesión</a>
+      <a class="boton" href="/registro">Crear cuenta</a>
+    {% endif %}
+  </nav>
+</header>
+
+<main>
+{% block contenido %}{% endblock %}
+</main>
+
+<footer>
+  CineClub Barrio — demo educativa ·
+  <a href="/docs" target="_blank">API en /docs</a>
+</footer>
+</body>
+</html>
